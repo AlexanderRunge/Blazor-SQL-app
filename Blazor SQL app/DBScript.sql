@@ -1,0 +1,13 @@
+﻿USE MASTER
+GO
+CREATE DATABASE BreakfastH1
+GO
+USE BreakfastH1
+GO
+
+CREATE TABLE Food (
+Id INT IDENTITY(1,1),
+Item NVARCHAR(255),
+Amount INT,
+Price DECIMAL(10,2)
+)

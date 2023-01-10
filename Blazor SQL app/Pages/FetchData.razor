@@ -1,0 +1,64 @@
+﻿@page "/fetchdata"
+@using Blazor_SQL_app.Data
+@inject WeatherForecastService ForecastService
+
+<PageTitle>Breakfast</PageTitle>
+
+<h1>BreakfastH1</h1>
+
+<p>Breaking even faster</p>
+
+@if (foodlist == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Item</th>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Button</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Food food in foodlist)
+            {
+                <tr>
+                    <td>@food.Id</td>
+                    <td>@food.Item</td>
+                    <td>@food.Amount</td>
+                    <td>@food.Price</td>
+                    <td><button @onclick="() => Delete(food.Id)">-</button></td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td><input @bind="food.Item"/></td>
+                <td><input @bind="food.Amount" /></td>
+                <td><input @bind="food.Price" /></td>
+                <td><button @onclick="Add">+</button></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    Food food = new();
+    List<Food> foodlist = new SQL().ReadFood();
+
+    void Add()
+    {
+        new SQL().CreateFood(food);
+        foodlist = new SQL().ReadFood();
+    }
+
+    void Delete(int Id)
+    {
+        new SQL().DeletedFood(Id);
+        foodlist = new SQL().ReadFood();
+    }
+}
